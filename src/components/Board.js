@@ -1,36 +1,53 @@
-import React from "react";
 import { Cell } from "./Cell";
 import { calculateWinner } from "./Winner";
 
 export const Board = ({ state, setstate }) => {
+  // checking for winner each time state updated
   const winner = calculateWinner(state.board);
 
   const handleClick = (position) => {
+    //   checking that current cell already filled or winner found
     if (state.board[position] || winner) return;
-    console.log(state);
+
+    // setstate for updating current state
     setstate((prev) => {
-      console.log(prev);
       const newArray = prev.board.map((element, pos) => {
         if (pos === position) {
           return state.isNext ? "X" : "O";
         }
         return element;
       });
-      console.log(newArray);
-      return { board: newArray, isNext: !state.isNext };
+
+      //creating new object for state
+      return { board: newArray, isNext: !state.isNext, count: state.count + 1 };
     });
   };
 
+  const reset = () => {
+    setstate(() => {
+      return {
+        board: Array(9).fill(null),
+        isNext: true,
+        count: 0,
+      };
+    });
+  };
+
+  //renderCell returns cell for given position
   const renderCell = (pos) => {
     return <Cell value={state.board[pos]} onClick={() => handleClick(pos)} />;
   };
-  const msg = winner
+
+  //   message for player
+  let msg = winner
     ? `Winner is: ${winner}`
     : `Next is: ${state.isNext ? "X" : "O"}`;
+  //updating message if all cell are consumed
+  if (state.count === 9 && !winner) msg = "Its a draw!";
+
   return (
     <div>
-      <h3>{msg}</h3>
-      {/* onClick={() => handleClick(0)}  */}
+      <h2>{msg}</h2>
       <div className="row">
         {renderCell(0)}
         {renderCell(1)}
@@ -46,6 +63,9 @@ export const Board = ({ state, setstate }) => {
         {renderCell(7)}
         {renderCell(8)}
       </div>
+      <button id="reset" onClick={() => reset()}>
+        Reset
+      </button>
     </div>
   );
 };

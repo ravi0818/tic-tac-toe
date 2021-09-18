@@ -19,9 +19,21 @@ code {
   display: flex;
   justify-content: center;
 }
-button {
+.cell {
   font-size: 80px;
   padding: 5px 20px;
   height: 130px;
   width: 130px;
+  background-color: rgb(115, 183, 204);
+  border-style: outset;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+#reset {
+  margin-top: 50px;
+  font-size: 20px;
+  padding: 5px;
 }
