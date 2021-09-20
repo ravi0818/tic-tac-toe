@@ -1,9 +1,10 @@
+import React from "react";
 import { Cell } from "./Cell";
 import { calculateWinner } from "./Winner";
 
 export const Board = ({ state, setstate }) => {
   // checking for winner each time state updated
-  const winner = calculateWinner(state.board);
+  const { winner, winningCombination } = calculateWinner(state.board);
 
   const handleClick = (position) => {
     //   checking that current cell already filled or winner found
@@ -33,11 +34,6 @@ export const Board = ({ state, setstate }) => {
     });
   };
 
-  //renderCell returns cell for given position
-  const renderCell = (pos) => {
-    return <Cell value={state.board[pos]} onClick={() => handleClick(pos)} />;
-  };
-
   //   message for player
   let msg = winner
     ? `Winner is: ${winner}`
@@ -45,8 +41,20 @@ export const Board = ({ state, setstate }) => {
   //updating message if all cell are consumed
   if (state.count === 9 && !winner) msg = "Its a draw!";
 
+  //renderCell returns cell for given position
+  const renderCell = (pos) => {
+    const isWinningCell = winningCombination.includes(pos);
+    return (
+      <Cell
+        value={state.board[pos]}
+        onClick={() => handleClick(pos)}
+        isWinningCell={isWinningCell}
+      />
+    );
+  };
+
   return (
-    <div>
+    <div className="board">
       <h2>{msg}</h2>
       <div className="row">
         {renderCell(0)}

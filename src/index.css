@@ -11,6 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+body {
+  background-color: #14bdac;
+}
+
 .App {
   text-align: center;
 }
@@ -19,13 +24,12 @@ code {
   display: flex;
   justify-content: center;
 }
+
 .cell {
-  font-size: 80px;
   padding: 5px 20px;
   height: 130px;
   width: 130px;
-  background-color: rgb(115, 183, 204);
-  border-style: outset;
+  background-color: #24cdeb;
 }
 
 h1 {
